@@ -1,15 +1,235 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Intern Management Portal</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* Add styles for your dashboard here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        h2 {
+            color: #007BFF;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .tabs button {
+            padding: 10px 20px;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-size: 16px;
+            background-color: transparent;
+        }
+        .tabs button.active {
+            border-bottom: 2px solid #007BFF;
+            font-weight: bold;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            align-items: center;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        form {
+            margin-top: 20px;
+        }
+        form input, form button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        form button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome to your Dashboard</h1>
-    <p>Here you can access all your important details.</p>
+    <div class="container">
+        <h1>Intern Management Portal</h1>
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showSection('view')">View Applicants</button>
+            <button class="tab-btn" onclick="showSection('add')">Add Applicant</button>
+            <button class="tab-btn" onclick="showSection('modify')">Modify Applicant</button>
+            <button class="tab-btn" onclick="showSection('delete')">Delete Applicant</button>
+        </div>
+
+        <!-- Sections -->
+        <div id="view" class="content-section active">
+            <h2>View Applicants</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search by Intern ID or Name">
+                <button onclick="searchInterns()">Search</button>
+            </div>
+            <table id="applicantTable">
+                <thead>
+                    <tr>
+                        <th>Serial Number</th>
+                        <th>Intern ID</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Date From</th>
+                        <th>Date To</th>
+                        <th>Generate File</th>
+                        <th>View File</th>
+                        <th>Send File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Placeholder data for demonstration
+                    $applicants = [
+                        ["1", "INT001", "John Doe", "Software Intern", "2024-01-01", "2024-06-30"],
+                        ["2", "INT002", "Jane Smith", "Marketing Intern", "2024-02-01", "2024-07-31"],
+                    ];
+                    
+                    foreach ($applicants as $applicant) {
+                        echo "<tr>";
+                        foreach ($applicant as $field) {
+                            echo "<td>$field</td>";
+                        }
+                        echo "<td><button class='btn'>Generate</button></td>";
+                        echo "<td><button class='btn'>View</button></td>";
+                        echo "<td><button class='btn'>Send</button></td>";
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="add" class="content-section">
+            <h2>Add Applicant</h2>
+            <form method="POST" action="add_applicant.php">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="designation">Designation:</label>
+    <input type="text" id="designation" name="designation" required><br>
+
+    <label for="date_from">Date From:</label>
+    <input type="date" id="date_from" name="date_from" required><br>
+
+    <label for="date_to">Date To:</label>
+    <input type="date" id="date_to" name="date_to" required><br>
+
+    <label for="letter_id">Letter ID:</label>
+    <input type="text" id="letter_id" name="letter_id" required><br>
+
+
+    <button type="submit" name="submit">Add Applicant</button>
+</form>
+
+            
+        </div>
+
+        <div id="modify" class="content-section">
+            <h2>Modify Applicant</h2>
+            <!-- Modify form can be added here -->
+        </div>
+
+        <div id="delete" class="content-section">
+            <h2>Delete Applicant</h2>
+            <!-- Delete form can be added here -->
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            const buttons = document.querySelectorAll('.tab-btn');
+            sections.forEach(section => section.classList.remove('active'));
+            buttons.forEach(button => button.classList.remove('active'));
+
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function searchInterns() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#applicantTable tbody tr');
+            
+            rows.forEach(row => {
+                const internId = row.cells[1].textContent.toLowerCase();
+                const name = row.cells[2].textContent.toLowerCase();
+
+                if (internId.includes(searchInput) || name.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>

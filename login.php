@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" id="username" name="username" required><br><br>
             <label for="password">Password:</label><br>
             <input type="password" id="password" name="password" required><br><br>
-            <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div><br>
+            <div class="g-recaptcha" data-sitekey="6LdkyHMqAAAAAFf5gKnu02HiXfu_tIwUnv5jc25q"></div><br>
             <button type="submit">Login</button>
         </form>
     </div>

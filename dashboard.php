@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -128,14 +128,13 @@
         <div id="view" class="content-section active">
             <h2>View Applicants</h2>
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search by Intern ID or Name">
+                <input type="text" id="searchInput" placeholder="Search by Name or Designation">
                 <button onclick="searchInterns()">Search</button>
             </div>
             <table id="applicantTable">
                 <thead>
                     <tr>
                         <th>Serial Number</th>
-                        <th>Intern ID</th>
                         <th>Name</th>
                         <th>Designation</th>
                         <th>Date From</th>
@@ -146,63 +145,66 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    // Placeholder data for demonstration
-                    $applicants = [
-                        ["1", "INT001", "John Doe", "Software Intern", "2024-01-01", "2024-06-30"],
-                        ["2", "INT002", "Jane Smith", "Marketing Intern", "2024-02-01", "2024-07-31"],
-                    ];
-                    
-                    foreach ($applicants as $applicant) {
-                        echo "<tr>";
-                        foreach ($applicant as $field) {
-                            echo "<td>$field</td>";
-                        }
-                        echo "<td><button class='btn'>Generate</button></td>";
-                        echo "<td><button class='btn'>View</button></td>";
-                        echo "<td><button class='btn'>Send</button></td>";
-                        echo "</tr>";
-                    }
-                    ?>
+                <?php include 'view_applicants.php'; ?>
                 </tbody>
             </table>
-        </div>
+        </div> 
+        <div class="button-section">
+        <button onclick="generateFile()">Generate File</button>
+        <button onclick="viewFile()">View File</button>
+        <button onclick="sendFile()">Send File</button>
+    </div>
 
         <div id="add" class="content-section">
             <h2>Add Applicant</h2>
             <form method="POST" action="add_applicant.php">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
 
-    <label for="designation">Designation:</label>
-    <input type="text" id="designation" name="designation" required><br>
+                <label for="designation">Designation:</label>
+                <input type="text" id="designation" name="designation" required><br>
 
-    <label for="date_from">Date From:</label>
-    <input type="date" id="date_from" name="date_from" required><br>
+                <label for="date_from">Date From:</label>
+                <input type="date" id="date_from" name="date_from" required><br>
 
-    <label for="date_to">Date To:</label>
-    <input type="date" id="date_to" name="date_to" required><br>
+                <label for="date_to">Date To:</label>
+                <input type="date" id="date_to" name="date_to" required><br>
 
-    <label for="letter_id">Letter ID:</label>
-    <input type="text" id="letter_id" name="letter_id" required><br>
+                <label for="letter_id">Letter ID:</label>
+                <input type="text" id="letter_id" name="letter_id" required><br>
 
-
-    <button type="submit" name="submit">Add Applicant</button>
-</form>
-
-            
+                <button type="submit" name="submit">Add Applicant</button>
+            </form>
         </div>
 
         <div id="modify" class="content-section">
             <h2>Modify Applicant</h2>
-            <!-- Modify form can be added here -->
+            <form method="POST" action="modify_applicant.php">
+                <label for="modify_name">Name:</label>
+                <input type="text" id="modify_name" name="name" placeholder="Enter Name" required><br>
+
+                <label for="modify_designation">Designation:</label>
+                <input type="text" id="modify_designation" name="designation" placeholder="Enter New Designation"><br>
+
+                <label for="modify_date_from">Date From:</label>
+                <input type="date" id="modify_date_from" name="date_from"><br>
+
+                <label for="modify_date_to">Date To:</label>
+                <input type="date" id="modify_date_to" name="date_to"><br>
+
+                <button type="submit" name="modify">Modify Applicant</button>
+            </form>
         </div>
 
         <div id="delete" class="content-section">
             <h2>Delete Applicant</h2>
-            <!-- Delete form can be added here -->
+            <form method="POST" action="delete_applicant.php">
+                <label for="delete_name">Name:</label>
+                <input type="text" id="delete_name" name="name" placeholder="Enter Name to Delete" required><br>
+
+                <button type="submit" name="delete">Delete Applicant</button>
+            </form>
         </div>
-    </div>
 
     <script>
         function showSection(sectionId) {
@@ -220,10 +222,10 @@
             const rows = document.querySelectorAll('#applicantTable tbody tr');
             
             rows.forEach(row => {
-                const internId = row.cells[1].textContent.toLowerCase();
-                const name = row.cells[2].textContent.toLowerCase();
+                const name = row.cells[1].textContent.toLowerCase();
+                const designation = row.cells[2].textContent.toLowerCase();
 
-                if (internId.includes(searchInput) || name.includes(searchInput)) {
+                if (name.includes(searchInput) || designation.includes(searchInput)) {
                     row.style.display = '';
                 } else {
                     row.style.display = 'none';

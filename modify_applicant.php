@@ -3,15 +3,16 @@
 include 'db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $current_name = $_POST['current_name']; // Name to find the record
-    $new_name = $_POST['new_name'] ?? null; // Updated name
+    $ref_no = $_POST['ref_no'];           // Reference Number to identify record
+    $new_name = $_POST['new_name'] ?? null;  // Updated name
     $designation = $_POST['designation'] ?? null;
     $date_from = $_POST['date_from'] ?? null;
     $date_to = $_POST['date_to'] ?? null;
+    $date = $_POST['date'] ?? null;        // Update date if necessary
 
-    // Check if `current_name` is provided
-    if (empty($current_name)) {
-        echo "Error: Current name is required to update records.";
+    // Check if `ref_no` is provided
+    if (empty($ref_no)) {
+        echo "Error: Reference number is required to update records.";
         exit;
     }
 
@@ -42,11 +43,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $params[] = $date_to;
         $types .= "s";
     }
+    if (!empty($date)) {
+        $fields[] = "date = ?";
+        $params[] = $date;
+        $types .= "s";
+    }
 
     // Build the final query
     if (!empty($fields)) {
-        $query .= implode(", ", $fields) . " WHERE name = ?";
-        $params[] = $current_name;
+        $query .= implode(", ", $fields) . " WHERE ref_no = ?";
+        $params[] = $ref_no;
         $types .= "s";
 
         // Prepare and execute the query
@@ -57,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->affected_rows > 0) {
                 echo "Intern details updated successfully.";
             } else {
-                echo "No record updated. Please check the provided current name.";
+                echo "No record updated. Please check the provided reference number.";
             }
         } else {
             echo "Error updating record: " . $stmt->error;

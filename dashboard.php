@@ -134,7 +134,9 @@
             <table id="applicantTable">
                 <thead>
                     <tr>
+                        <th>Ref No</th>
                         <th>Serial Number</th>
+                        <th>date</th>
                         <th>Name</th>
                         <th>Designation</th>
                         <th>Date From</th>
@@ -148,62 +150,65 @@
                 <?php include 'view_applicants.php'; ?>
                 </tbody>
             </table>
-        </div> 
-        <div class="button-section">
-        <button onclick="generateFile()">Generate File</button>
-        <button onclick="viewFile()">View File</button>
-        <button onclick="sendFile()">Send File</button>
-    </div>
-
+       
         <div id="add" class="content-section">
             <h2>Add Applicant</h2>
             <form method="POST" action="add_applicant.php">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required><br>
+                  <label for="ref_no">Ref No:</label>
+                  <input type="text" id="ref_no" name="ref_no" required><br>
 
-                <label for="designation">Designation:</label>
-                <input type="text" id="designation" name="designation" required><br>
+                  <label for="date">Date:</label>
+                  <input type="date" id="date" name="date" required><br>
+
+                  <label for="name">Name:</label>
+                  <input type="text" id="name" name="name" required><br>
+
+                  <label for="designation">Designation:</label>
+                 <input type="text" id="designation" name="designation" required><br>
 
                 <label for="date_from">Date From:</label>
                 <input type="date" id="date_from" name="date_from" required><br>
 
                 <label for="date_to">Date To:</label>
-                <input type="date" id="date_to" name="date_to" required><br>
+                  <input type="date" id="date_to" name="date_to" required><br>
 
-                <label for="letter_id">Letter ID:</label>
-                <input type="text" id="letter_id" name="letter_id" required><br>
-
-                <button type="submit" name="submit">Add Applicant</button>
-            </form>
+    <button type="submit" name="submit">Add Applicant</button>
+</form>
         </div>
 
         <div id="modify" class="content-section">
             <h2>Modify Applicant</h2>
             <form method="POST" action="modify_applicant.php">
+                <label for="ref_no">Ref No:</label>
+                <input type="text" id="ref_no" name="ref_no" required><br>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date"><br>
+
                 <label for="modify_name">Name:</label>
-                <input type="text" id="modify_name" name="name" placeholder="Enter Name" required><br>
+                <input type="text" id="modify_name" name="name" required><br>
 
-                <label for="modify_designation">Designation:</label>
-                <input type="text" id="modify_designation" name="designation" placeholder="Enter New Designation"><br>
+               <label for="modify_designation">Designation:</label>
+               <input type="text" id="modify_designation" name="designation"><br>
 
-                <label for="modify_date_from">Date From:</label>
-                <input type="date" id="modify_date_from" name="date_from"><br>
+               <label for="modify_date_from">Date From:</label>
+               <input type="date" id="modify_date_from" name="date_from"><br>
 
-                <label for="modify_date_to">Date To:</label>
-                <input type="date" id="modify_date_to" name="date_to"><br>
+               <label for="modify_date_to">Date To:</label>
+               <input type="date" id="modify_date_to" name="date_to"><br>
 
-                <button type="submit" name="modify">Modify Applicant</button>
-            </form>
+    <button type="submit" name="update">Modify Applicant</button>
+</form>
         </div>
 
         <div id="delete" class="content-section">
             <h2>Delete Applicant</h2>
             <form method="POST" action="delete_applicant.php">
-                <label for="delete_name">Name:</label>
-                <input type="text" id="delete_name" name="name" placeholder="Enter Name to Delete" required><br>
+                <label for="ref_no">Ref No:</label>
+                <input type="text" id="ref_no" name="ref_no" required><br>
 
                 <button type="submit" name="delete">Delete Applicant</button>
-            </form>
+</form>
         </div>
 
     <script>
